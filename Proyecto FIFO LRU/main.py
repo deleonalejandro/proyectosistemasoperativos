@@ -31,9 +31,9 @@ def SwapIn(SwappingPages, Method):
         if Method == 0:
 =======
             MainToSwapID = (FIFO[1])
-            ToPrintOut.append("Swap out " + str(MainToSwapID))
-            BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
-            TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
+            ToPrintOut.append("Swap out " + str(MainToSwapID)) #Adds swaps to print list.
+            BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val) #Stores the lowest value
+            TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val) #Stores the highest value
             TopMainMemStack += 1
             for y in range(BottomMainMemStack, TopMainMemStack):
                     MainMemory[y][2] = str("Page #")
