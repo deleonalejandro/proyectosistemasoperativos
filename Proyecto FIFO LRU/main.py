@@ -5,7 +5,19 @@ import time
 import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
+<<<<<<< HEAD
+
+=======
 #Esto es una prueba
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+#Hola bebe puedes ver esto???
+>>>>>>> 9302e231b31784d638815a521b3de0f2900b0f6d
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
+>>>>>>> a476cb2261294cb973125d93badfe5952d34927f
 def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
@@ -14,6 +26,10 @@ def SwapIn(SwappingPages, Method):
             Method = 1
 
         if Method == 1:
+<<<<<<< HEAD
+            #Here write FIFO code
+        if Method == 0:
+=======
             MainToSwapID = (FIFO[1])
             ToPrintOut.append("Swap out " + str(MainToSwapID))
             BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
@@ -25,11 +41,23 @@ def SwapIn(SwappingPages, Method):
                     PageNumToRemove += 1
                     PageRecorder = PageNumToRemove
         elif Method == 0:
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
             #Here write LRU code
+
     except:
         print("Error")
+<<<<<<< HEAD
 
     #Main paging definition, this section covers the FIFO paging system but still missing LIFO
+=======
+<<<<<<< HEAD
+=======
+        
+        
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
+
+#Main paging definition, this section covers the FIFO paging system but still missing LIFO
+>>>>>>> a476cb2261294cb973125d93badfe5952d34927f
 def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
     #Index to iterate through the whole instruction list
     #Printout variable to inspect the output
@@ -66,6 +94,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
     FIFO = []
     LRU = []
 
+
+
     #Begin by trying to iterate through the list, this is to check if the list is valid
     start_time = time.time()
 
@@ -97,7 +127,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                     #Loop to cycle through the main memory list and fill it up with the program
                     #Check if process ID is in the memory
                     #Check if Process is already in the system
-                    IsInMainMemory = any(ProcessLocation in sl for sl in MainMemory)
 
                     if IsInMainMemory == True:
                         print("Program is loaded in main memory")
@@ -107,7 +136,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
 
                         #If it's not in the main memory, check if it's in the swap memory
                         IsInSwapMemory = any(ProcessLocation in sl for sl in SwapMemory)
-
+                        
                         if IsInSwapMemory == True:
                             print("Take it out")
                         else:
@@ -171,7 +200,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                     #If all is fine proceed to load it...
 
                 except:
-                    #If the MainMemory is full, then an error will be caught
                     print("Main memory full, switching to swap")
                     RemainingMemoryToAddress = ProgramSize - x 
                     for y in range(PageNum, RemainingMemoryToAddress):
@@ -379,8 +407,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                     PageRecorder = PageNumToRemove
                 Jumped = True
                 PositionMemory = BottomMainMemStack
-                #Remove the process from the FIFO list after it was removed from Main Memory
-                FIFO.remove(str(ProcessLocationL))
+
                 #Check if the process is in the swap memory
                 try:
                     BottomSwapMemStack = min(idx for idx, val in enumerate(SwapMemory) if ProcessLocationL in val)
@@ -465,7 +492,7 @@ def MemoryGenerator(RealMemorySize, SwapMemorySize, PageSize):
         
 
 #Begin here
-DatosEjecucion = open('ArchivoTrabajo.txt', 'r')
+DatosEjecucion = open('Proyecto FIFO LRU\ArchivoTrabajo.txt', 'r')
 InstructionsToRun = DatosEjecucion.readlines()
 print("Datos recibidos")
 #Input Data for the Memory sizes -> Like This MemoryGenerator(Main Memory Size, Swap Memory Size, Page Size, Instructions (Already Added into File))
