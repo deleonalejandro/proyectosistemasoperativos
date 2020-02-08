@@ -6,7 +6,11 @@ import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
 #Esto es una prueba
+<<<<<<< HEAD
 
+=======
+#Hola bebe puedes ver esto???
+>>>>>>> 9302e231b31784d638815a521b3de0f2900b0f6d
 def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
