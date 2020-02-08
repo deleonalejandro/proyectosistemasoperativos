@@ -6,8 +6,6 @@ import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
 
-#Hola bebe, prueba 12:12 am
-"""
 def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
@@ -22,7 +20,6 @@ def SwapIn(SwappingPages, Method):
 
     except:
         print("Error")
-"""
 
 #Main paging definition, this section covers the FIFO paging system but still missing LIFO
 def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
