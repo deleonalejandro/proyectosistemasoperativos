@@ -19,7 +19,6 @@ def SwapIn(SwappingPages, Method):
             #Here write LRU code
     except:
         print("Error")
-    
 
 
 #Main paging definition, this section covers the FIFO paging system but still missing LIFO
