@@ -19,10 +19,11 @@ def SwapIn(SwappingPages, Method):
             #Here write LRU code
     except:
         print("Error")
+        
+        #qp2
 
-
-#Main paging definition, this section covers the FIFO paging system but still missing LIFO
-def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
+    #Main paging definition, this section covers the FIFO paging system but still missing LIFO
+    def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
     #Index to iterate through the whole instruction list
     #Printout variable to inspect the output
     ToPrintOut = []
