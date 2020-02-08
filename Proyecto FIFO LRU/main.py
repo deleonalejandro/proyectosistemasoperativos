@@ -6,6 +6,8 @@ import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
 
+
+def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
         if Method != 1 and Method != 0:
@@ -14,23 +16,20 @@ from decimal     import Decimal, ROUND_DOWN
 
         if Method == 1:
             MainToSwapID = (FIFO[1])
-            ToPrintOut.append("Swap out " + str(MainToSwapID))
-            BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
-            TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
+            ToPrintOut.append("Swap out " + str(MainToSwapID)) #Adds swaps to print list.
+            BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val) #Stores the lowest value
+            TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val) #Stores the highest value
             TopMainMemStack += 1
             for y in range(BottomMainMemStack, TopMainMemStack):
-                    MainMemory[y].remove("Page " + str(PageNumToRemove))
-                    MainMemory[y].insert(2, "Page #")
-                    MainMemory[y].remove(ProcessLocationL)
-                    MainMemory[y].insert(3, str("Process ID #"))
+                    MainMemory[y][2] = str("Page #")
+                    MainMemory[y][3] = str("Process ID #")
                     PageNumToRemove += 1
                     PageRecorder = PageNumToRemove
         elif Method == 0:
             #Here write LRU code
 
     except:
-        print("Error")
-        
+        print("Error")        
         
 
 #Main paging definition, this section covers the FIFO paging system but still missing LIFO
@@ -262,7 +261,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                 except:
                     pass
                                                     
-
+            #We add the process that was loaded into Main Memory to the line of Processes for the FIFO method
+            FIFO.append(ProcessLocation)
             #Throw an error code if the programand quit immediately
             except:
                 print("Trouble!")
@@ -353,6 +353,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
             ToPrintOut.append("Deleted " + str(ProcessLocationL))
             try:
                 ListofProcessesAdded.remove(str(ProcessLocationL))
+                FIFO.remove(str(ProcessLocationL))
             except:
                 print("Process is not in memory, unable to comply with command")
             #Try to remove the process from the stack, if there's a process in the memory it will remove it
