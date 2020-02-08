@@ -5,7 +5,16 @@ import time
 import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
+<<<<<<< HEAD
 
+=======
+#Esto es una prueba
+<<<<<<< HEAD
+
+=======
+#Hola bebe puedes ver esto???
+>>>>>>> 9302e231b31784d638815a521b3de0f2900b0f6d
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
 def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
@@ -14,12 +23,33 @@ def SwapIn(SwappingPages, Method):
             Method = 1
 
         if Method == 1:
+<<<<<<< HEAD
             #Here write FIFO code
         if Method == 0:
+=======
+            MainToSwapID = (FIFO[1])
+            ToPrintOut.append("Swap out " + str(MainToSwapID))
+            BottomMainMemStack = min(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
+            TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
+            TopMainMemStack += 1
+            for y in range(BottomMainMemStack, TopMainMemStack):
+                    MainMemory[y].remove("Page " + str(PageNumToRemove))
+                    MainMemory[y].insert(2, "Page #")
+                    MainMemory[y].remove(ProcessLocationL)
+                    MainMemory[y].insert(3, str("Process ID #"))
+                    PageNumToRemove += 1
+                    PageRecorder = PageNumToRemove
+        elif Method == 0:
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
             #Here write LRU code
 
     except:
         print("Error")
+<<<<<<< HEAD
+=======
+        
+        
+>>>>>>> 7d06e3096bb1bb499c7e88c41678190ac43577b0
 
 #Main paging definition, this section covers the FIFO paging system but still missing LIFO
 def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
