@@ -6,11 +6,6 @@ import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
 #Esto es una prueba
-<<<<<<< HEAD
-
-=======
-#Hola bebe puedes ver esto???
->>>>>>> 9302e231b31784d638815a521b3de0f2900b0f6d
 def SwapIn(SwappingPages, Method):
     try:
         #Avoiding errors
@@ -25,21 +20,17 @@ def SwapIn(SwappingPages, Method):
             TopMainMemStack = max(idx for idx, val in enumerate(MainMemory) if MainToSwapID in val)
             TopMainMemStack += 1
             for y in range(BottomMainMemStack, TopMainMemStack):
-                    MainMemory[y].remove("Page " + str(PageNumToRemove))
-                    MainMemory[y].insert(2, "Page #")
-                    MainMemory[y].remove(ProcessLocationL)
-                    MainMemory[y].insert(3, str("Process ID #"))
+                    MainMemory[y][2] = str("Page #")
+                    MainMemory[y][3] = str("Process ID #")
                     PageNumToRemove += 1
                     PageRecorder = PageNumToRemove
         elif Method == 0:
             #Here write LRU code
     except:
         print("Error")
-        
-        
 
     #Main paging definition, this section covers the FIFO paging system but still missing LIFO
-    def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
+def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
     #Index to iterate through the whole instruction list
     #Printout variable to inspect the output
     ToPrintOut = []
@@ -175,8 +166,6 @@ def SwapIn(SwappingPages, Method):
                                         SegmentedMemory2 += 1                                                
                                     print("Switching sides")
                                 #Max of process 3
-                     #We add the process that was loaded into Main Memory to the line of Processes for the FIFO method
-                     FIFO.append(ProcessLocation)
 
                     RemainingMemoryToAddress = ProgramSize - x 
                     #If all is fine proceed to load it...
@@ -269,7 +258,8 @@ def SwapIn(SwappingPages, Method):
                 except:
                     pass
                                                     
-
+            #We add the process that was loaded into Main Memory to the line of Processes for the FIFO method
+            FIFO.append(ProcessLocation)
             #Throw an error code if the programand quit immediately
             except:
                 print("Trouble!")
@@ -360,6 +350,7 @@ def SwapIn(SwappingPages, Method):
             ToPrintOut.append("Deleted " + str(ProcessLocationL))
             try:
                 ListofProcessesAdded.remove(str(ProcessLocationL))
+                FIFO.remove(str(ProcessLocationL))
             except:
                 print("Process is not in memory, unable to comply with command")
             #Try to remove the process from the stack, if there's a process in the memory it will remove it
