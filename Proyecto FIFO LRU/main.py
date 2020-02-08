@@ -58,8 +58,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
     FIFO = []
     LRU = []
 
-
-
     #Begin by trying to iterate through the list, this is to check if the list is valid
     start_time = time.time()
 
@@ -91,6 +89,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                     #Loop to cycle through the main memory list and fill it up with the program
                     #Check if process ID is in the memory
                     #Check if Process is already in the system
+                    IsInMainMemory = any(ProcessLocation in sl for sl in MainMemory)
 
                     if IsInMainMemory == True:
                         print("Program is loaded in main memory")
@@ -100,7 +99,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
 
                         #If it's not in the main memory, check if it's in the swap memory
                         IsInSwapMemory = any(ProcessLocation in sl for sl in SwapMemory)
-                        
+
                         if IsInSwapMemory == True:
                             print("Take it out")
                         else:
@@ -159,11 +158,14 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                                         SegmentedMemory2 += 1                                                
                                     print("Switching sides")
                                 #Max of process 3
+                     #We add the process that was loaded into Main Memory to the line of Processes for the FIFO method
+                     FIFO.append(ProcessLocation)
 
                     RemainingMemoryToAddress = ProgramSize - x 
                     #If all is fine proceed to load it...
 
                 except:
+                    #If the MainMemory is full, then an error will be caught
                     print("Main memory full, switching to swap")
                     RemainingMemoryToAddress = ProgramSize - x 
                     for y in range(PageNum, RemainingMemoryToAddress):
@@ -369,7 +371,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize):
                     PageRecorder = PageNumToRemove
                 Jumped = True
                 PositionMemory = BottomMainMemStack
-
+                #Remove the process from the FIFO list after it was removed from Main Memory
+                FIFO.remove(str(ProcessLocationL))
                 #Check if the process is in the swap memory
                 try:
                     BottomSwapMemStack = min(idx for idx, val in enumerate(SwapMemory) if ProcessLocationL in val)
