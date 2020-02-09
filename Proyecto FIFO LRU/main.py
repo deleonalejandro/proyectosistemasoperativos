@@ -48,7 +48,6 @@ def SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, vFIFO, vLRU, Method)
         IndexesFinalLRU = []
         IndexesFinal = []
         newSpace = 0
-        LRUindex = 0
         RealLRU = vLRU[:]
         #Method will give indexes of process to be replaced. It will add indexes to more
         #processes to be replaced until the space freed up from Main Memory fits the
@@ -94,30 +93,12 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
     #Index to iterate through the whole instruction list
     #Printout variable to inspect the output
     ToPrintOut = []
-    #Page number initializer
-    PageNum = 0
-    #Number of page, recovered from instruction set
-    num = 0
     #Initializer for the index that'll be used up next
     Index = 0
-    #Boolean variable that will test the list and notify of any jumps in the memory
-    Jumped = False
-    #Iterator to go through the list
-    IteratorForMainMemory = 0
-    #List of processes currently in the memory
-    ListofProcessesAdded = []
-    #Iterator for memory, this will move through the memory range
-    IteratorForSwapMemory = 0
     #Variable to hold the program size in itself, it will be modified later
     InitialProgramSize = 0
     #Variable that will hold the process ID from the client
     ProcessID = 0
-    #I will explain this variable later on...
-    RemainingMemoryToAddress = 0
-    #Total execution time
-    Turnaround = 0.00000000000
-    #NOT USED, pending implementation
-    Freememory = []
     #Boolean variable to test if process is in main memory
     IsInMainMemory = False
     #Boolean variable to test if process is in swap memory
@@ -138,7 +119,10 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
         print("\nInstruction to run")
         ToPrintOut.append(["Instruction: " + InstructionsToRun[Index]])
         print(InstructionsToRun[Index])
-
+        if 'C' in InstructionsToRun[Index]:
+            #We make a comment, according to C command
+            print("Executing command C, Comment on System State: System Working Fine")
+            ToPrintOut.append(["Executing command C, Comment on System State: System Working Fine"])
         #If we find a designator P then it indicates that we must load the program
         if 'P' in InstructionsToRun[Index]:
             #We split the data to make it easier to iterate through the tuple or quadruple
@@ -156,7 +140,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 #We proceed to try loading up the memory, specially important to switch memories
                 try:
                     ProcessLocation = ("Process ID" + " " + str(ProcessID))
-                    ListofProcessesAdded.append(str(ProcessLocation))
 
                     #Loop to cycle through the main memory list and fill it up with the program
                     #Check if process ID is in the memory
@@ -178,8 +161,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                         #Checks if program fits into free space of main memory
                         if ProgramSize <= len(FreeSpace):
-                            Capacity = True
-
                             #Checks if the program is in swap memory or not, to load it up
                             if IsInSwapMemory == False:
 
@@ -330,7 +311,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     
                     #Check if program fits into free space
                     if ProgramSize <= len(FreeSpace):
-                        Capacity = True
                         ToPrintOut.append(["-------Process loaded------\n"])
 
                         #Make the swap form swap memory to main memory
@@ -431,7 +411,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             
             #Delete process from main memory if in main memory
             if any(ProcessLocationL in sl for sl in MainMemory):
-                ListofProcessesAdded.remove(str(ProcessLocationL))
                 FIFO.remove(str(ProcessLocationL))
 
                 #Delete from Main Memory
@@ -458,7 +437,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 
 
             elif any(ProcessLocationL in sl for sl in SwapMemory):
-                print("Process is not in main memory, unable to comply with command")
+                print("Process is not in main memory")
 
                 #Delete from Swap Memory
 
@@ -525,7 +504,6 @@ def MemoryGenerator(RealMemorySize, SwapMemorySize, PageSize, Method):
     PageFrames = 0
     SelectedMethod = Method
     AuxiliaryPageFrames = 0
-    RunCheck = []
     #Generate the physical address list!
     if RealMemorySize != 0 and PageSize != 0:
         Tracker = 0
