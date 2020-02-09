@@ -2,26 +2,26 @@
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x0
 Page 1 in Physical Address: 0x1
-['Turnaround: 0.003522157669067383']
+['Turnaround: 0.002841949462890625']
 ['Instruction: P 48 3\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x2
 Page 1 in Physical Address: 0x3
 Page 2 in Physical Address: 0x4
-['Turnaround: 0.006948232650756836']
+['Turnaround: 0.0061261653900146484']
 ['Instruction: P 63 4\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x5
 Page 1 in Physical Address: 0x6
 Page 2 in Physical Address: 0x7
 Page 3 in Physical Address: 0x8
-['Turnaround: 0.009155035018920898']
+['Turnaround: 0.007709980010986328']
 ['Instruction: L 3\n']
 Deleted Process ID 3
 Page 0 deleted from Physical Address: 0x2
 Page 1 deleted from Physical Address: 0x3
 Page 2 deleted from Physical Address: 0x4
-['Turnaround: 0.010237932205200195']
+['Turnaround: 0.009417057037353516']
 ['Instruction: P 80 5\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x2
@@ -29,7 +29,7 @@ Page 1 in Physical Address: 0x3
 Page 2 in Physical Address: 0x4
 Page 3 in Physical Address: 0x9
 Page 4 in Physical Address: 0xa
-['Turnaround: 0.013590097427368164']
+['Turnaround: 0.014482975006103516']
 ['Instruction: P 1744 109\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0xb
@@ -141,7 +141,7 @@ Page 105 in Physical Address: 0x74
 Page 106 in Physical Address: 0x75
 Page 107 in Physical Address: 0x76
 Page 108 in Physical Address: 0x77
-['Turnaround: 0.05474519729614258']
+['Turnaround: 0.04869890213012695']
 ['Instruction: P 96 6\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x78
@@ -150,21 +150,21 @@ Page 2 in Physical Address: 0x7a
 Page 3 in Physical Address: 0x7b
 Page 4 in Physical Address: 0x7c
 Page 5 in Physical Address: 0x7d
-['Turnaround: 0.05718827247619629']
+['Turnaround: 0.0514829158782959']
 ['Instruction: A 16 2 0\n']
 Real Address 0x1
-['Turnaround: 0.05769515037536621']
+['Turnaround: 0.05486297607421875']
 ['Instruction: A 63 4 0\n']
 Real Address 0x8
-['Turnaround: 0.058175086975097656']
+['Turnaround: 0.0570220947265625']
 ['Instruction: A 62 4 1\n']
 Real Address 0x8
-['Turnaround: 0.05874013900756836']
+['Turnaround: 0.05875587463378906']
 ['Instruction: A 1 109 1\n']
 Real Address 0xb
-['Turnaround: 0.059294939041137695']
+['Turnaround: 0.05963706970214844']
 ['Instruction: C\n']
-['Turnaround: 0.05950808525085449']
+['Turnaround: 0.05983281135559082']
 ['Instruction: P 96 61\n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x0
@@ -173,15 +173,15 @@ Page 2 in Physical Address: 0x5
 Page 3 in Physical Address: 0x6
 Page 4 in Physical Address: 0x7
 Page 5 in Physical Address: 0x8
-['Turnaround: 0.06168198585510254']
+['Turnaround: 0.06340503692626953']
 ['Instruction: L 2               \n']
 Deleted Process ID 2
 Page 0 deleted from Physical Address: 0
 Page 1 deleted from Physical Address: 1
-['Turnaround: 0.06615400314331055']
+['Turnaround: 0.06729698181152344']
 ['Instruction: A 8 5 0\n']
 Real Address 0x2
-['Turnaround: 0.06667900085449219']
+['Turnaround: 0.06851506233215332']
 ['Instruction: A 8 4 0              \n']
 ['-------Process loaded------\n']
 Page 0 in Physical Address: 0x2
@@ -189,7 +189,7 @@ Page 1 in Physical Address: 0x3
 Page 2 in Physical Address: 0x4
 Page 3 in Physical Address: 0x9
 Real Address 0x2
-['Turnaround: 0.07169198989868164']
+['Turnaround: 0.07236886024475098']
 ['Instruction: L 5\n']
 Deleted Process ID 5
 Page 0 deleted from Physical Address: 0
@@ -197,17 +197,17 @@ Page 1 deleted from Physical Address: 1
 Page 2 deleted from Physical Address: 6
 Page 3 deleted from Physical Address: 7
 Page 4 deleted from Physical Address: 8
-['Turnaround: 0.07293319702148438']
+['Turnaround: 0.10317802429199219']
 ['Instruction: L 2                \n']
 Deleted Process ID 2
-['Turnaround: 0.07340598106384277']
+['Turnaround: 0.10672593116760254']
 ['Instruction: L 4              \n']
 Deleted Process ID 4
 Page 0 deleted from Physical Address: 0x2
 Page 1 deleted from Physical Address: 0x3
 Page 2 deleted from Physical Address: 0x4
 Page 3 deleted from Physical Address: 0x9
-['Turnaround: 0.07424712181091309']
+['Turnaround: 0.13573312759399414']
 ['Instruction: L 6                    \n']
 Deleted Process ID 6
 Page 0 deleted from Physical Address: 0x78
@@ -216,7 +216,7 @@ Page 2 deleted from Physical Address: 0x7a
 Page 3 deleted from Physical Address: 0x7b
 Page 4 deleted from Physical Address: 0x7c
 Page 5 deleted from Physical Address: 0x7d
-['Turnaround: 0.07519912719726562']
+['Turnaround: 0.17543792724609375']
 ['Instruction: L 61\n']
 Deleted Process ID 61
 Page 0 deleted from Physical Address: 0x0
@@ -225,7 +225,7 @@ Page 2 deleted from Physical Address: 0x5
 Page 3 deleted from Physical Address: 0x6
 Page 4 deleted from Physical Address: 0x7
 Page 5 deleted from Physical Address: 0x8
-['Turnaround: 0.0760650634765625']
+['Turnaround: 0.19053387641906738']
 ['Instruction: L 109\n']
 Deleted Process ID 109
 Page 0 deleted from Physical Address: 0xb
@@ -337,14 +337,14 @@ Page 105 deleted from Physical Address: 0x74
 Page 106 deleted from Physical Address: 0x75
 Page 107 deleted from Physical Address: 0x76
 Page 108 deleted from Physical Address: 0x77
-['Turnaround: 0.12021398544311523']
+['Turnaround: 0.2455120086669922']
 ['Instruction: F\n']
-['Turnaround: 0.12090706825256348']
+['Turnaround: 0.24632811546325684']
 ['Instruction: A 2 2 0\n']
 Process not in main or swap memory
-['Turnaround: 0.1215980052947998']
+['Turnaround: 0.24684715270996094']
 ['Instruction: P 2049 2049\n']
-['Turnaround: 0.1225442886352539']
+['Turnaround: 0.24867892265319824']
 ['Instruction: F\n']
-['Turnaround: 0.12319207191467285']
+['Turnaround: 0.2530817985534668']
 ['Instruction: E']
