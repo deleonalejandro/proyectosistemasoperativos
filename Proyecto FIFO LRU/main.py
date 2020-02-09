@@ -195,8 +195,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 #Append a string with the desired process ID to find the memory location
                 ProcessLocation = ("Process ID" + " " + str(AccessProcessID))
                 RealAdIndex = [i for i, s in enumerate(MainMemory) if PageNumLoc in s and ProcessLocation in s]
-                
-                
+
             except:
                 pass
 
@@ -210,10 +209,42 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         print("Modified")
 
                 ToPrintOut.append("Real Address " + str(RealAddress))
+                LRU.append([ProcessLocation,time.time()])
 
             else:
+                if any(ProcessLocation in sl for sl in SwapMemory):
+                    IndexToSwapIn = SwapIn(ProcessLocation,SwapMemory)
 
+                    FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
+                    ToPrintOut.append(["-------Process loaded------\n"])
+
+                        for i in range(0, ProgramSize):
+                            MainMemory[FreeSpace[i]][2] = SwapMemory[IndexToSwapIn[i]][2]
+                            MainMemory[FreeSpace[i]][3] = SwapMemory[IndexToSwapIn[i]][3]
+                            #Printing physical address
+                            print("Page {0} in Physical Address: {1} from Swap Memory Adress: {2}".format(i,str(MainMemory[FreeSpace[i]][1]),SwapMemory[IndexToSwapIn[i]][1]))
+                            ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1])+" from Swap Memory Adress" + str(SwapMemory[IndexToSwapIn[i]][1]))
+                            SwapMemory[IndexToSwapIn[i]][3] = "Process ID #"
+                            SwapMemory[IndexToSwapIn[i]][2] = "Page #"
+                            
+                    FIFO.append(ProcessLocation)
+                    LRU.append([ProcessLocation,time.time()])
+
+                    RealAddress = MainMemory[RealAdIndex[0]][1]
+                    MainMemory[RealAdIndex[0]][0] = AccessModifierBit
+                    print("Real Address " + str(RealAddress))
+                    print("Read")
+
+                    if AccessModifierBit == 1:
+                        print("Modified")
+
+                    ToPrintOut.append("Real Address " + str(RealAddress))
+                    LRU.append([ProcessLocation,time.time()])
+
+                else:
+                    print("Process not in main or swap memory")
+                    ToPrintOut.append("Process not in main or swap memory")
                 
                 
 
@@ -232,6 +263,10 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             try:
                 ListofProcessesAdded.remove(str(ProcessLocationL))
                 FIFO.remove(str(ProcessLocationL))
+                LRUindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
+                for i in range(len(LRUindex)):
+                    LRU.pop(LRUindex[i])
+                
 
                 #Delete from Main Memory
 
