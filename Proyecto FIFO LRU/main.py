@@ -234,6 +234,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             FreeSpaceSwap = [x for x, s in enumerate(SwapMemory) if "Page #" in s]
                             print("Loading SwapMemory")
                             for i in range(0, len(IndexToSwapOut[1])):
+                                SwapMemory[FreeSpaceSwap[i]][0] = MainMemory[IndexToSwapOut[1][i]][0]
                                 SwapMemory[FreeSpaceSwap[i]][2] = MainMemory[IndexToSwapOut[1][i]][2]
                                 SwapMemory[FreeSpaceSwap[i]][3] = MainMemory[IndexToSwapOut[1][i]][3]
                                 print("{0} from {1} into  SwapAddress: {2}".format(MainMemory[IndexToSwapOut[1][i]][2], MainMemory[IndexToSwapOut[1][i]][3], str(SwapMemory[FreeSpaceSwap[i]][1])))
@@ -241,6 +242,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                             #Deleting main memory 
                             for i in range(len(IndexToSwapOut[1])):
+                                MainMemory[IndexToSwapOut[1][i]][0] = 0
                                 MainMemory[IndexToSwapOut[1][i]][2] = "Page #"
                                 MainMemory[IndexToSwapOut[1][i]][3] = "Process ID #"
 
@@ -248,7 +250,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
                             ToPrintOut.append(["-------Process loaded------\n"])
-                            print("Loading from SwapMemory to MainMemory")
+                            print("Loading MainMemory")
 
                             #Load process into Main Memory
                             for i in range(0, ProgramSize):
@@ -330,6 +332,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     
                     #Check if program fits into free space
                     if ProgramSize <= len(FreeSpace):
+                        print("log- Process fits in Main Memory, no swap-out needed.")
                         Capacity = True
                         ToPrintOut.append(["-------Process loaded------\n"])
 
@@ -351,6 +354,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                     #If there was not enough free space, use swap memory    
                     else:
+                        print("log- Unable to load process in Main Memory")
                         print("-----Switching to SwapMemory-------")
                         #Use method to select which programs to swap out
                         IndexToSwapOut = SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, FIFO, LRU, SelectedMethod)
@@ -360,11 +364,15 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
 
                         #Check if swap memory has space
+                        print("log- Free up space in Main Memory")
                         FreeSpaceSwap = [x for x, s in enumerate(SwapMemory) if "Page #" in s]
                         for i in range(0, len(IndexToSwapOut[1])):
                             SwapMemory[FreeSpaceSwap[i]][0] = MainMemory[IndexToSwapOut[1][i]][0]
                             SwapMemory[FreeSpaceSwap[i]][2] = MainMemory[IndexToSwapOut[1][i]][2]
                             SwapMemory[FreeSpaceSwap[i]][3] = MainMemory[IndexToSwapOut[1][i]][3]
+                            #Printing process to swap-out
+                            print("{0} from {1} into  SwapAddress: {2}".format(MainMemory[IndexToSwapOut[1][i]][2], MainMemory[IndexToSwapOut[1][i]][3], str(SwapMemory[FreeSpaceSwap[i]][1])))
+
                             
 
                         #Deleting main memory and swapmemory
@@ -374,21 +382,21 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             MainMemory[IndexToSwapOut[1][i]][3] = "Process ID #"
 
                         IndexToRemove = [idx for idx, val in enumerate(SwapMemory) if ProcessLocation in val]
-                           
+                        print("\nlog- Removing " + ProcessLocation)   
                         for y in range(len(IndexToRemove)):
-                            print("Page {0} deleted from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
-                            ToPrintOut.append("Page "+str(y)+ " deleted from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
+                            print("Page {0} removed from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
+                            ToPrintOut.append("Page "+str(y)+ " removed from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
                             SwapMemory[IndexToRemove[y]][0] = 0
                             SwapMemory[IndexToRemove[y]][2] = "Page #"
                             SwapMemory[IndexToRemove[y]][3] = "Process ID #"
-                        print(ProcessLocation + " successfully deleted from Swap Memory.")                        
+                        print(ProcessLocation + " successfully removed from Swap Memory.")                        
 
                         #Calculating new space
                         FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
                         #Load into Main memory
                         ToPrintOut.append(["-------Process loaded------\n"])
-                        print("Loading from SwapMemory to MainMemory")
+                        print("\nLoading from SwapMemory to MainMemory")
                         for i in range(0, ProgramSize):
                             MainMemory[FreeSpace[i]][0] = AccessModifierBit
                             MainMemory[FreeSpace[i]][2] = "Page "+str(i)
@@ -405,6 +413,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     RealAdIndex = [i for i, s in enumerate(MainMemory) if PageNumLoc in s and ProcessLocation in s]
                     RealAddress = MainMemory[RealAdIndex[0]][1]
                     MainMemory[RealAdIndex[0]][0] = AccessModifierBit
+                    print("\nAccessing " + ProcessLocation)
                     print("Real Address " + str(RealAddress))
                     print("Read")
 
