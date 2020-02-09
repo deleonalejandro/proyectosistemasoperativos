@@ -5,6 +5,7 @@ import re
 import time
 import math
 import sys
+import statistics
 from decimal     import Decimal, ROUND_DOWN
 
 def SwapIn(ProcessLocation, SwapMemory):
@@ -144,7 +145,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                     MainMemory[FreeSpace[i]][3] = ProcessLocation
                                     
                                     #Printing physical address
-                                    print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
+                                    print("Page {0} in Physical Address: {1}".format(i, str(MainMemory[FreeSpace[i]][1])))
                                     ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                                 
                                 FIFO.append(ProcessLocation)
@@ -182,9 +183,11 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                             #Check if swap memory has space
                             FreeSpaceSwap = [x for x, s in enumerate(SwapMemory) if "Page #" in s]
+                            print("Loading SwapMemory")
                             for i in range(0, len(IndexToSwapOut[1])):
                                 SwapMemory[FreeSpaceSwap[i]][2] = MainMemory[IndexToSwapOut[1][i]][2]
                                 SwapMemory[FreeSpaceSwap[i]][3] = MainMemory[IndexToSwapOut[1][i]][3]
+                                print("{0} from {1} into  SwapAddress: {2}".format(MainMemory[IndexToSwapOut[1][i]][2], MainMemory[IndexToSwapOut[1][i]][3], str(SwapMemory[FreeSpaceSwap[i]][1])))
                                
 
                             #Deleting main memory 
@@ -265,6 +268,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         ToPrintOut.append(["-------Process loaded------\n"])
 
                         for i in range(0, ProgramSize):
+                            MainMemory[FreeSpace[i]][0] = SwapMemory[IndexToSwapIn[i]][0]
                             MainMemory[FreeSpace[i]][2] = SwapMemory[IndexToSwapIn[i]][2]
                             MainMemory[FreeSpace[i]][3] = SwapMemory[IndexToSwapIn[i]][3]
                             #Printing physical address
@@ -272,6 +276,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1])+" from Swap Memory Adress" + str(SwapMemory[IndexToSwapIn[i]][1]))
                             SwapMemory[IndexToSwapIn[i]][3] = "Process ID #"
                             SwapMemory[IndexToSwapIn[i]][2] = "Page #"
+                            SwapMemory[IndexToSwapIn[i]][0] = 0
                                 
                         FIFO.append(ProcessLocation)
                         LRU.append([ProcessLocation,time.time()])
@@ -289,14 +294,26 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         #Check if swap memory has space
                         FreeSpaceSwap = [x for x, s in enumerate(SwapMemory) if "Page #" in s]
                         for i in range(0, len(IndexToSwapOut[1])):
+                            SwapMemory[FreeSpaceSwap[i]][0] = MainMemory[IndexToSwapOut[1][i]][0]
                             SwapMemory[FreeSpaceSwap[i]][2] = MainMemory[IndexToSwapOut[1][i]][2]
                             SwapMemory[FreeSpaceSwap[i]][3] = MainMemory[IndexToSwapOut[1][i]][3]
                             
 
-                        #Deleting main memory 
+                        #Deleting main memory and swapmemory
                         for i in range(len(IndexToSwapOut[1])):
+                            MainMemory[IndexToSwapOut[1][i]][0] = 0
                             MainMemory[IndexToSwapOut[1][i]][2] = "Page #"
                             MainMemory[IndexToSwapOut[1][i]][3] = "Process ID #"
+
+                        IndexToRemove = [idx for idx, val in enumerate(SwapMemory) if ProcessLocation in val]
+                           
+                        for y in range(len(IndexToRemove)):
+                            print("Page {0} deleted from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
+                            ToPrintOut.append("Page "+str(y)+ " deleted from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
+                            SwapMemory[IndexToRemove[y]][0] = 0
+                            SwapMemory[IndexToRemove[y]][2] = "Page #"
+                            SwapMemory[IndexToRemove[y]][3] = "Process ID #"
+                        print(ProcessLocation + " successfully deleted from Swap Memory.")                        
 
                         #Calculating new space
                         FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
@@ -304,6 +321,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         ToPrintOut.append(["-------Process loaded------\n"])
                         print("Loading from SwapMemory to MainMemory")
                         for i in range(0, ProgramSize):
+                            MainMemory[FreeSpace[i]][0] = AccessModifierBit
                             MainMemory[FreeSpace[i]][2] = "Page "+str(i)
                             MainMemory[FreeSpace[i]][3] = ProcessLocation
                             #Printing physical address
@@ -358,7 +376,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 ToPrintF.append([ProcessLocationL, TurnATime, 0])
 
                 #Deleting process from LRU
-                LRUindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
+                LRUindex = [idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
                 for i in range(len(LRUindex)):
                     LRU.pop(LRUindex[i])
                 
@@ -375,8 +393,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 IndexToRemove = [idx for idx, val in enumerate(SwapMemory) if ProcessLocationL in val]
                            
                 for y in range(len(IndexToRemove)):
-                    print("Page {0} deleted from Physical Address: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
-                    ToPrintOut.append("Page "+str(y)+ " deleted from Physical Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
+                    print("Page {0} deleted from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
+                    ToPrintOut.append("Page "+str(y)+ " deleted from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
                     SwapMemory[IndexToRemove[y]][2] = "Page #"
                     SwapMemory[IndexToRemove[y]][3] = "Process ID #"
                 print("Process successfully deleted from Swap Memory.")
@@ -398,10 +416,26 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             break
 
         elif 'F' in InstructionsToRun[Index]:
-            print("Process\t Turnaround\t Turnaround Average\t Page Fault\t Op. Swap-In\t Swap-Out")
-            print(ToPrintF)
+            TotalSwaps = 0
+            TotalTime = 0
+            counter = 0
+            print("Warning: When a page fault occurs, turnaround is 0.\n ")
+            print("Process\t\t Turnaround[s]\t Page Fault \n----------------------------------------------")
+            for i in range(len(ToPrintF)):
+                print("{0}\t {1:2.4f}\t\t {2}".format(ToPrintF[i][0],ToPrintF[i][1],ToPrintF[i][2]))
+                if ToPrintF[i][1] > 0:
+                    counter += 1
+                if ToPrintF[i][2] == 1:
+                    TotalSwaps += 1  
+                TotalTime += ToPrintF[i][1]
+            print("Total swap-in and swap-out----> "+ str(TotalSwaps))
+            #Creating average
+            TurnAmean = TotalTime/counter
+            print("Turnaround Average-----> "+ str(TurnAmean))
 
-            pass
+            
+            
+
 
         end_time = time.time()
         Turnaround_P = end_time - start_time
