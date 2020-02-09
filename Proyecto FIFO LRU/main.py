@@ -222,7 +222,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             #Calculating new space
                             FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
-                            ToPrintOut.append(["-------Process loaded------\n"])
                             print("Loading MainMemory")
 
                             #Load process into Main Memory
@@ -304,8 +303,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     if ProgramSize <= len(FreeSpace):
                         print("log- Process fits in Main Memory, no swap-out needed.")
                         Capacity = True
-                        ToPrintOut.append(["-------Process loaded------\n"])
-
                         #Make the swap form swap memory to main memory
                         for i in range(0, ProgramSize):
                             MainMemory[FreeSpace[i]][0] = SwapMemory[IndexToSwapIn[i]][0]
@@ -513,13 +510,13 @@ def MemoryGenerator(RealMemorySize, SwapMemorySize, PageSize, Method):
         
 
 #Begin here´
-print("Usage: Open your file and select method ")
+print("Usage: Open your file and select a method and press enter.")
 DatosEjecucion = open('./Proyecto FIFO LRU/ArchivoTrabajo.txt', 'r')
 InstructionsToRun = DatosEjecucion.readlines()
-print("Datos recibidos")
+print("Data received")
 #Input Data for the Memory sizes -> Like This MemoryGenerator(Main Memory Size, Swap Memory Size, Page Size, Instructions (Already Added into File))
 #In this project use the following:
-smethod = input("FIFO press 1 \n LRU press 2 \n")
+smethod = input("FIFO  1 \n LRU  2 \n")
 
 MemoryGenerator(2048, 4096, 16, smethod)
 
