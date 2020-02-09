@@ -10,46 +10,77 @@ import operator
 from functools import reduce
 
 def SwapIn(ProcessLocation, SwapMemory):
-    #Write code
+    #Swap In will tell you which indexes of the Swap Memory correspond to the process 
+    #to be pur into Main Memory
     Indexes = [i for i, s in enumerate(SwapMemory) if ProcessLocation in s]
     return Indexes
 
 
 def SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, vFIFO, vLRU, Method):
-#Fifo Method 
+# Swap Out can give you the Indexes of the Main Memory to be deleted to free up space
+#It can use FIFO or LRU replacement methods
+#It also stores the values of the indexes of the processes to be removed form
+#FIFO list and from LRU list
     if Method == 1:
+        #Method 1 is FIFO
+
+        #Since LRU is not used here, we assign a random value
         IndexesFinalLRU = []
         IndexesFinal = []
         newSpace = 0
         FIFOIndex = 0
+        #Method will give indexes of process to be replaced. It will add indexes to more
+        #processes to be replaced until the space freed up from Main Memory fits the
+        #required space to fit the program to be loaded
         while newSpace < ProgramSize:
+            #Checks the first process that was added, according to FIFO method
             Indexes = [i for i, s in enumerate(MainMemory) if vFIFO[FIFOIndex] in s]
             IndexesFinal.extend(Indexes)
+            #Space from free memory is the space freed and the Free Space from memory
+            #before FIFO method was implemented
             newSpace = len(IndexesFinal) + len(FreeSpace)
+            #Checks next added process, in case more space is needed
             FIFOIndex += 1 
     else:
+        #Method 2 is LRU, is another number from 1 or 2 is given, program
+        #will act as if assuming LRU method
         IndexesFinalLRU = []
         IndexesFinal = []
         newSpace = 0
         LRUindex = 0
         RealLRU = vLRU[:]
+        #Method will give indexes of process to be replaced. It will add indexes to more
+        #processes to be replaced until the space freed up from Main Memory fits the
+        #required space to fit the program to be loaded
         while newSpace < ProgramSize:
             newlistLRU = reduce(operator.concat, RealLRU)
             del newlistLRU[::2]
             minOfLRU = min(enumerate(newlistLRU))[0]
             minProcessID = RealLRU[minOfLRU][0]
+            #Checks the Process in LRU list with the least timestamp, which means
+            #it checks the method least recently used
             Indexes = [i for i, s in enumerate(MainMemory) if minProcessID in s]
             IndexesFinal.extend(Indexes)
+            #Space from free memory is the space freed and the Free Space from memory
+            #before FIFO method was implemented
             newSpace = len(IndexesFinal) + len(FreeSpace)
 
-            #Removing least recently used, for the second least recently used. 
+            #Removing least recently used, for the second least recently used, in case more
+            #space is needed
             IndexesLRURemove = [i for i, s in enumerate(RealLRU) if minProcessID in s]
+            #Since the method will give indexes of LRU list to be removed later, we need
+            #to keep track of the indexes form the original list and from the shortened list
             RealIndexesLRURemove = [i for i, s in enumerate(vLRU) if minProcessID in s]
+            #Indexes displayed will be the ones from the original list
             IndexesFinalLRU.extend(RealIndexesLRURemove)
 
+            #Deleting the indexes from the LRU list, taking into account that as it deletes
+            #a process, the indexes change
             while len(IndexesLRURemove) > 0:
                 RealLRU.pop(IndexesLRURemove[0])
                 IndexesLRURemove = [i for i, s in enumerate(RealLRU) if minProcessID in s]
+        
+        #Since FIFO is not used here, we assign a random value
         FIFOIndex = 0
 
     return [FIFOIndex, IndexesFinal, IndexesFinalLRU]
@@ -92,7 +123,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
     IsInSwapMemory = False
     #Method FIFO = 1 and LRU = 0
     SelectedMethod = int(Method) 
-    #Creating lists
+    #Creating lists for FIFO and LRU methods
     FIFO = []
     LRU = []
 
@@ -133,23 +164,27 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     IsInMainMemory = any(ProcessLocation in sl for sl in MainMemory)
                     IsInSwapMemory = any(ProcessLocation in sl for sl in SwapMemory)
 
+                    #If process is in main memory, do nothing
                     if IsInMainMemory == True:
                         print("Program is loaded in main memory")
                         LRU.append([ProcessLocation,time.time()])
 
-                    
+                    #If process not in main memory, will need to load it up
                     if IsInMainMemory == False:
                         print("Program is not loaded in main memory")
                         #Looks for free pages in main memory
                         FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
+                        #Checks if program fits into free space of main memory
                         if ProgramSize <= len(FreeSpace):
                             Capacity = True
 
+                            #Checks if the program is in swap memory or not, to load it up
                             if IsInSwapMemory == False:
 
                                 ToPrintOut.append(["-------Process loaded------\n"])
                                 for i in range(0, ProgramSize):
+                                    #Loads process info into Main Memory
                                     MainMemory[FreeSpace[i]][2] = "Page "+str(i)
                                     MainMemory[FreeSpace[i]][3] = ProcessLocation
                                     
@@ -157,9 +192,12 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                     print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
                                     ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                                 
+                                #Adds process to FIFO and LRU lists, including its timestamp
                                 FIFO.append(ProcessLocation)
                                 LRU.append([ProcessLocation,time.time()])
                             else:
+
+                                #If process is in Swap in Memory, load it up from there
                                 IndexToSwapIn = SwapIn(ProcessLocation, SwapMemory)
                                 for i in range(0, len(IndexToSwapIn[1])):
                                     MainMemory[FreeSpace[i]][2] = SwapMemory[IndexToSwapIn[i]][2]
@@ -169,24 +207,27 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                     print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
                                     ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                                 
+                                #Adds process to FIFO and LRU lists, including its timestamp
                                 FIFO.append(ProcessLocation)
                                 LRU.append([ProcessLocation,time.time()])
 
                         elif ProgramSize > len(MainMemory):
+
+                            #If there is not enough memory, cant load program
                             print("Error: Program does not fit into memory")
                             pass
                         
                         else:
+
+                            #If space needs to be freed up, use FIFO or LRU method
                             print("Warning: Page Fault")
                             #Saving page fault
                             ToPrintF.append([ProcessLocation, 0, 1])
                             print("-----Switching to SwapMemory-------")
                             IndexToSwapOut = SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, FIFO, LRU, SelectedMethod)
                             
-                            #Deleting FIFO Array and LRU Array indexes
-
+                            #Deleting FIFO Array, not from LRU 
                             FIFO[0:IndexToSwapOut[0]] = []
-
 
                             #Check if swap memory has space
                             FreeSpaceSwap = [x for x, s in enumerate(SwapMemory) if "Page #" in s]
@@ -205,6 +246,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                             ToPrintOut.append(["-------Process loaded------\n"])
                             print("Loading from SwapMemory to MainMemory")
+
+                            #Load process into Main Memory
                             for i in range(0, ProgramSize):
                                 MainMemory[FreeSpace[i]][2] = "Page "+str(i)
                                 MainMemory[FreeSpace[i]][3] = ProcessLocation
@@ -212,6 +255,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                 print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
                                 ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                             
+                            #Adds process to FIFO and LRU lists, including its timestamp
                             FIFO.append(ProcessLocation)
                             LRU.append([ProcessLocation,time.time()])
 
@@ -244,34 +288,49 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 RealAdIndex = [i for i, s in enumerate(MainMemory) if PageNumLoc in s and ProcessLocation in s]
 
             except:
+                #If no correct info is given, pass the instruction
                 pass
 
             if len(RealAdIndex) == 1:
+                #If there is a real address, then get it form Main Memory
                 RealAddress = MainMemory[RealAdIndex[0]][1]
+                #Modify or not the program ,according to instruction modifier bit
                 MainMemory[RealAdIndex[0]][0] = AccessModifierBit
+
+                #Print the real addres, which was read
                 print("Real Address " + str(RealAddress))
                 print("Read")
 
+                #If modifier bit is 1, specify that it was modified
                 if AccessModifierBit == 1:
                         print("Modified")
 
+                #Add process to LRU list and print address
                 ToPrintOut.append("Real Address " + str(RealAddress))
                 LRU.append([ProcessLocation,time.time()])
 
             else:
+
+                #Addres could not be in main memory, so will give page fault
                 print("Warning: Page Fault \n")
                 #Saving page fault
                 ToPrintF.append([ProcessLocation, 0, 1])
+
+                #If process in swap memory, make swap
                 if any(ProcessLocation in sl for sl in SwapMemory):
                     IndexToSwapIn = SwapIn(ProcessLocation, SwapMemory)
+                    #Program size can be gotten from swap memory
                     ProgramSize = len(IndexToSwapIn)
 
+                    #Check free space in Main memory
                     FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
                     
+                    #Check if program fits into free space
                     if ProgramSize <= len(FreeSpace):
                         Capacity = True
                         ToPrintOut.append(["-------Process loaded------\n"])
 
+                        #Make the swap form swap memory to main memory
                         for i in range(0, ProgramSize):
                             MainMemory[FreeSpace[i]][2] = SwapMemory[IndexToSwapIn[i]][2]
                             MainMemory[FreeSpace[i]][3] = SwapMemory[IndexToSwapIn[i]][3]
@@ -281,10 +340,14 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             SwapMemory[IndexToSwapIn[i]][3] = "Process ID #"
                             SwapMemory[IndexToSwapIn[i]][2] = "Page #"
                                 
+                        #Add process added to LRU and FIFO lists        
                         FIFO.append(ProcessLocation)
                         LRU.append([ProcessLocation,time.time()])
+
+                    #If there was not enough free space, use swap memory    
                     else:
                         print("-----Switching to SwapMemory-------")
+                        #Use method to select which programs to swap out
                         IndexToSwapOut = SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, FIFO, LRU, SelectedMethod)
                         
                         #Deleting FIFO Array and LRU Array indexes
@@ -309,6 +372,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         #Calculating new space
                         FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
+                        #Load into Main memory
                         ToPrintOut.append(["-------Process loaded------\n"])
                         print("Loading from SwapMemory to MainMemory")
                         for i in range(0, ProgramSize):
@@ -317,22 +381,27 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             #Printing physical address
                             print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
                             ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
-                        
+
+                        #Add processes to LRU and FIFO lists  
                         FIFO.append(ProcessLocation)
                         LRU.append([ProcessLocation,time.time()])
 
+                    #Specify the real address now that it is in Main Memory 
                     RealAdIndex = [i for i, s in enumerate(MainMemory) if PageNumLoc in s and ProcessLocation in s]
                     RealAddress = MainMemory[RealAdIndex[0]][1]
                     MainMemory[RealAdIndex[0]][0] = AccessModifierBit
                     print("Real Address " + str(RealAddress))
                     print("Read")
 
+                    #Specify if it was modified or not
                     if AccessModifierBit == 1:
                         print("Modified")
 
+                    #Print real address and LRU has new time stamp for this process
                     ToPrintOut.append("Real Address " + str(RealAddress))
                     LRU.append([ProcessLocation,time.time()])
 
+                #If not in main or swap memory, cant get address
                 else:
                     print("Process not in main or swap memory")
                     ToPrintOut.append("Process not in main or swap memory")
@@ -344,11 +413,11 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             ProcessIDL = ''.join(SplittedDataL[1].splitlines())
             ProcessLocationL = ("Process ID" + " " + str(ProcessIDL))
             ToPrintOut.append("Deleted " + str(ProcessLocationL))
-            try:
+            
+            #Delete process from main memory if in main memory
+            if any(ProcessLocationL in sl for sl in MainMemory)
                 ListofProcessesAdded.remove(str(ProcessLocationL))
                 FIFO.remove(str(ProcessLocationL))
-                
-                
 
                 #Delete from Main Memory
 
@@ -360,6 +429,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     MainMemory[IndexToRemove[y]][2] = "Page #"
                     MainMemory[IndexToRemove[y]][3] = "Process ID #"
                 
+                #Saving Turnaround time
                 ListMinLRU = [LRU[i] for i, s in enumerate(LRU) if ProcessLocationL in s]
                 minLRU = min(ListMinLRU)
                 TurnATime = time.time() - minLRU[1]
@@ -372,12 +442,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     LRU.pop(LRUrealindex[0])
                 
 
-            except:
+            elif any(ProcessLocationL in sl for sl in SwapMemory):
                 print("Process is not in main memory, unable to comply with command")
-
-            #Try to remove the process from the stack, if there's a process in the memory it will remove it
-            #and it will check the swap memory to load it again
-            if any(ProcessLocationL in sl for sl in SwapMemory):
 
                 #Delete from Swap Memory
 
@@ -389,14 +455,21 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                     SwapMemory[IndexToRemove[y]][2] = "Page #"
                     SwapMemory[IndexToRemove[y]][3] = "Process ID #"
                 print("Process successfully deleted from Swap Memory.")
+
                 #Saving turnaround time
                 ListMinLRU = [LRU[i] for i, s in enumerate(LRU) if ProcessLocationL in s]
                 minLRU = min(ListMinLRU)
                 TurnATime = time.time() - minLRU[1]
                 ToPrintF.append([ProcessLocationL, TurnATime, 0])
+
+                #Deleting process from LRU
+                LRUindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
+                for i in range(len(LRUindex)):
+                    LRUrealindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
+                    LRU.pop(LRUrealindex[0])
             
             else:
-                print("Process not in swap memory")                   
+                print("Process not in swap memory or in main memory, unable to comply with command")                
 
         elif 'E' in InstructionsToRun[Index]:
             print("Exiting...")
