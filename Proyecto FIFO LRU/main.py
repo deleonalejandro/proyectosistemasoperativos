@@ -6,6 +6,8 @@ import time
 import math
 import sys
 from decimal     import Decimal, ROUND_DOWN
+import operator
+from functools import reduce
 
 def SwapIn(ProcessLocation, SwapMemory):
     #Write code
@@ -27,19 +29,27 @@ def SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, vFIFO, vLRU, Method)
             FIFOIndex += 1 
     else:
         IndexesFinalLRU = []
+        IndexesFinal = []
         newSpace = 0
         LRUindex = 0
+        RealLRU = vLRU[:]
         while newSpace < ProgramSize:
-            Indexes = [i for i, s in enumerate(MainMemory) if min(vLRU)[0] in s]
+            newlistLRU = reduce(operator.concat, RealLRU)
+            del newlistLRU[::2]
+            minOfLRU = min(enumerate(newlistLRU))[0]
+            minProcessID = RealLRU[minOfLRU][0]
+            Indexes = [i for i, s in enumerate(MainMemory) if minProcessID in s]
             IndexesFinal.extend(Indexes)
             newSpace = len(IndexesFinal) + len(FreeSpace)
 
             #Removing least recently used, for the second least recently used. 
-            IndexesLRURemove = [i for i, s in enumerate(vLRU) if min(vLRU)[0] in s]
-            IndexesFinalLRU.extend(IndexesLRURemove)
+            IndexesLRURemove = [i for i, s in enumerate(RealLRU) if minProcessID in s]
+            RealIndexesLRURemove = [i for i, s in enumerate(vLRU) if minProcessID in s]
+            IndexesFinalLRU.extend(RealIndexesLRURemove)
 
-            for i in range(len(IndexesLRURemove)):
-                vLRU.pop([IndexesLRURemove[i]])
+            while len(IndexesLRURemove) > 0:
+                RealLRU.pop(IndexesLRURemove[0])
+                IndexesLRURemove = [i for i, s in enumerate(RealLRU) if minProcessID in s]
         FIFOIndex = 0
 
     return [FIFOIndex, IndexesFinal, IndexesFinalLRU]
@@ -174,8 +184,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             IndexToSwapOut = SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, FIFO, LRU, SelectedMethod)
                             
                             #Deleting FIFO Array and LRU Array indexes
-                            for j in range(len(IndexToSwapOut[2])):
-                                LRU.pop(IndexToSwapOut[2][j])
 
                             FIFO[0:IndexToSwapOut[0]] = []
 
@@ -360,7 +368,8 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 #Deleting process from LRU
                 LRUindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
                 for i in range(len(LRUindex)):
-                    LRU.pop(LRUindex[i])
+                    LRUrealindex=[idx for idx, val in enumerate(LRU) if ProcessLocationL in val]
+                    LRU.pop(LRUrealindex[0])
                 
 
             except:
@@ -442,7 +451,7 @@ def MemoryGenerator(RealMemorySize, SwapMemorySize, PageSize, Method):
 
 #Begin here´
 print("Usage: Open your file and select method ")
-DatosEjecucion = open('.\Proyecto FIFO LRU\ArchivoTrabajo.txt', 'r')
+DatosEjecucion = open('./Proyecto FIFO LRU/ArchivoTrabajo.txt', 'r')
 InstructionsToRun = DatosEjecucion.readlines()
 print("Datos recibidos")
 #Input Data for the Memory sizes -> Like This MemoryGenerator(Main Memory Size, Swap Memory Size, Page Size, Instructions (Already Added into File))

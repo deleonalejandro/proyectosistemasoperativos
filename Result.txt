@@ -1,0 +1,332 @@
+['Instruction: P 32 2\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0x0
+Page 1 in Physical Address: 0x1
+['Turnaround: 0.007025957107543945']
+['Instruction: P 48 3\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0x2
+Page 1 in Physical Address: 0x3
+Page 2 in Physical Address: 0x4
+['Turnaround: 0.014222860336303711']
+['Instruction: P 63 4\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0x5
+Page 1 in Physical Address: 0x6
+Page 2 in Physical Address: 0x7
+Page 3 in Physical Address: 0x8
+['Turnaround: 0.02146315574645996']
+['Instruction: L 3\n']
+Deleted Process ID 3
+Page 0 deleted from Physical Address: 0x2
+Page 1 deleted from Physical Address: 0x3
+Page 2 deleted from Physical Address: 0x4
+['Turnaround: 0.028255939483642578']
+['Instruction: P 80 5\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0x2
+Page 1 in Physical Address: 0x3
+Page 2 in Physical Address: 0x4
+Page 3 in Physical Address: 0x9
+Page 4 in Physical Address: 0xa
+['Turnaround: 0.03629183769226074']
+['Instruction: P 1744 109\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0xb
+Page 1 in Physical Address: 0xc
+Page 2 in Physical Address: 0xd
+Page 3 in Physical Address: 0xe
+Page 4 in Physical Address: 0xf
+Page 5 in Physical Address: 0x10
+Page 6 in Physical Address: 0x11
+Page 7 in Physical Address: 0x12
+Page 8 in Physical Address: 0x13
+Page 9 in Physical Address: 0x14
+Page 10 in Physical Address: 0x15
+Page 11 in Physical Address: 0x16
+Page 12 in Physical Address: 0x17
+Page 13 in Physical Address: 0x18
+Page 14 in Physical Address: 0x19
+Page 15 in Physical Address: 0x1a
+Page 16 in Physical Address: 0x1b
+Page 17 in Physical Address: 0x1c
+Page 18 in Physical Address: 0x1d
+Page 19 in Physical Address: 0x1e
+Page 20 in Physical Address: 0x1f
+Page 21 in Physical Address: 0x20
+Page 22 in Physical Address: 0x21
+Page 23 in Physical Address: 0x22
+Page 24 in Physical Address: 0x23
+Page 25 in Physical Address: 0x24
+Page 26 in Physical Address: 0x25
+Page 27 in Physical Address: 0x26
+Page 28 in Physical Address: 0x27
+Page 29 in Physical Address: 0x28
+Page 30 in Physical Address: 0x29
+Page 31 in Physical Address: 0x2a
+Page 32 in Physical Address: 0x2b
+Page 33 in Physical Address: 0x2c
+Page 34 in Physical Address: 0x2d
+Page 35 in Physical Address: 0x2e
+Page 36 in Physical Address: 0x2f
+Page 37 in Physical Address: 0x30
+Page 38 in Physical Address: 0x31
+Page 39 in Physical Address: 0x32
+Page 40 in Physical Address: 0x33
+Page 41 in Physical Address: 0x34
+Page 42 in Physical Address: 0x35
+Page 43 in Physical Address: 0x36
+Page 44 in Physical Address: 0x37
+Page 45 in Physical Address: 0x38
+Page 46 in Physical Address: 0x39
+Page 47 in Physical Address: 0x3a
+Page 48 in Physical Address: 0x3b
+Page 49 in Physical Address: 0x3c
+Page 50 in Physical Address: 0x3d
+Page 51 in Physical Address: 0x3e
+Page 52 in Physical Address: 0x3f
+Page 53 in Physical Address: 0x40
+Page 54 in Physical Address: 0x41
+Page 55 in Physical Address: 0x42
+Page 56 in Physical Address: 0x43
+Page 57 in Physical Address: 0x44
+Page 58 in Physical Address: 0x45
+Page 59 in Physical Address: 0x46
+Page 60 in Physical Address: 0x47
+Page 61 in Physical Address: 0x48
+Page 62 in Physical Address: 0x49
+Page 63 in Physical Address: 0x4a
+Page 64 in Physical Address: 0x4b
+Page 65 in Physical Address: 0x4c
+Page 66 in Physical Address: 0x4d
+Page 67 in Physical Address: 0x4e
+Page 68 in Physical Address: 0x4f
+Page 69 in Physical Address: 0x50
+Page 70 in Physical Address: 0x51
+Page 71 in Physical Address: 0x52
+Page 72 in Physical Address: 0x53
+Page 73 in Physical Address: 0x54
+Page 74 in Physical Address: 0x55
+Page 75 in Physical Address: 0x56
+Page 76 in Physical Address: 0x57
+Page 77 in Physical Address: 0x58
+Page 78 in Physical Address: 0x59
+Page 79 in Physical Address: 0x5a
+Page 80 in Physical Address: 0x5b
+Page 81 in Physical Address: 0x5c
+Page 82 in Physical Address: 0x5d
+Page 83 in Physical Address: 0x5e
+Page 84 in Physical Address: 0x5f
+Page 85 in Physical Address: 0x60
+Page 86 in Physical Address: 0x61
+Page 87 in Physical Address: 0x62
+Page 88 in Physical Address: 0x63
+Page 89 in Physical Address: 0x64
+Page 90 in Physical Address: 0x65
+Page 91 in Physical Address: 0x66
+Page 92 in Physical Address: 0x67
+Page 93 in Physical Address: 0x68
+Page 94 in Physical Address: 0x69
+Page 95 in Physical Address: 0x6a
+Page 96 in Physical Address: 0x6b
+Page 97 in Physical Address: 0x6c
+Page 98 in Physical Address: 0x6d
+Page 99 in Physical Address: 0x6e
+Page 100 in Physical Address: 0x6f
+Page 101 in Physical Address: 0x70
+Page 102 in Physical Address: 0x71
+Page 103 in Physical Address: 0x72
+Page 104 in Physical Address: 0x73
+Page 105 in Physical Address: 0x74
+Page 106 in Physical Address: 0x75
+Page 107 in Physical Address: 0x76
+Page 108 in Physical Address: 0x77
+['Turnaround: 0.05318784713745117']
+['Instruction: P 96 6\n']
+['-------Process loaded------\n']
+Page 0 in Physical Address: 0x78
+Page 1 in Physical Address: 0x79
+Page 2 in Physical Address: 0x7a
+Page 3 in Physical Address: 0x7b
+Page 4 in Physical Address: 0x7c
+Page 5 in Physical Address: 0x7d
+['Turnaround: 0.06312918663024902']
+['Instruction: A 16 2 0\n']
+Real Address 0x1
+['Turnaround: 0.06444096565246582']
+['Instruction: A 63 4 0\n']
+Real Address 0x8
+['Turnaround: 0.06546211242675781']
+['Instruction: A 62 4 1\n']
+Real Address 0x8
+['Turnaround: 0.06661510467529297']
+['Instruction: A 1 109 1\n']
+Real Address 0xb
+['Turnaround: 0.0681459903717041']
+['Instruction: C\n']
+['Turnaround: 0.06838607788085938']
+['Instruction: P 96 61\n']
+['Turnaround: 100.7421441078186']
+['Instruction: L 2               \n']
+Deleted Process ID 2
+Page 0 deleted from Physical Address: 0x0
+Page 1 deleted from Physical Address: 0x1
+['Turnaround: 100.75006604194641']
+['Instruction: A 8 5 0\n']
+Real Address 0x2
+['Turnaround: 100.75059008598328']
+['Instruction: A 8 4 0              \n']
+Real Address 0x5
+['Turnaround: 100.751060962677']
+['Instruction: L 5\n']
+Deleted Process ID 5
+Page 0 deleted from Physical Address: 0x2
+Page 1 deleted from Physical Address: 0x3
+Page 2 deleted from Physical Address: 0x4
+Page 3 deleted from Physical Address: 0x9
+Page 4 deleted from Physical Address: 0xa
+['Turnaround: 100.76069903373718']
+['Instruction: L 2                \n']
+Deleted Process ID 2
+['Turnaround: 100.76494002342224']
+['Instruction: L 4              \n']
+Deleted Process ID 4
+Page 0 deleted from Physical Address: 0x5
+Page 1 deleted from Physical Address: 0x6
+Page 2 deleted from Physical Address: 0x7
+Page 3 deleted from Physical Address: 0x8
+['Turnaround: 100.7696180343628']
+['Instruction: L 6                    \n']
+Deleted Process ID 6
+Page 0 deleted from Physical Address: 0x78
+Page 1 deleted from Physical Address: 0x79
+Page 2 deleted from Physical Address: 0x7a
+Page 3 deleted from Physical Address: 0x7b
+Page 4 deleted from Physical Address: 0x7c
+Page 5 deleted from Physical Address: 0x7d
+['Turnaround: 100.77835083007812']
+['Instruction: L 61\n']
+Deleted Process ID 61
+['Turnaround: 100.78234815597534']
+['Instruction: L 109\n']
+Deleted Process ID 109
+Page 0 deleted from Physical Address: 0xb
+Page 1 deleted from Physical Address: 0xc
+Page 2 deleted from Physical Address: 0xd
+Page 3 deleted from Physical Address: 0xe
+Page 4 deleted from Physical Address: 0xf
+Page 5 deleted from Physical Address: 0x10
+Page 6 deleted from Physical Address: 0x11
+Page 7 deleted from Physical Address: 0x12
+Page 8 deleted from Physical Address: 0x13
+Page 9 deleted from Physical Address: 0x14
+Page 10 deleted from Physical Address: 0x15
+Page 11 deleted from Physical Address: 0x16
+Page 12 deleted from Physical Address: 0x17
+Page 13 deleted from Physical Address: 0x18
+Page 14 deleted from Physical Address: 0x19
+Page 15 deleted from Physical Address: 0x1a
+Page 16 deleted from Physical Address: 0x1b
+Page 17 deleted from Physical Address: 0x1c
+Page 18 deleted from Physical Address: 0x1d
+Page 19 deleted from Physical Address: 0x1e
+Page 20 deleted from Physical Address: 0x1f
+Page 21 deleted from Physical Address: 0x20
+Page 22 deleted from Physical Address: 0x21
+Page 23 deleted from Physical Address: 0x22
+Page 24 deleted from Physical Address: 0x23
+Page 25 deleted from Physical Address: 0x24
+Page 26 deleted from Physical Address: 0x25
+Page 27 deleted from Physical Address: 0x26
+Page 28 deleted from Physical Address: 0x27
+Page 29 deleted from Physical Address: 0x28
+Page 30 deleted from Physical Address: 0x29
+Page 31 deleted from Physical Address: 0x2a
+Page 32 deleted from Physical Address: 0x2b
+Page 33 deleted from Physical Address: 0x2c
+Page 34 deleted from Physical Address: 0x2d
+Page 35 deleted from Physical Address: 0x2e
+Page 36 deleted from Physical Address: 0x2f
+Page 37 deleted from Physical Address: 0x30
+Page 38 deleted from Physical Address: 0x31
+Page 39 deleted from Physical Address: 0x32
+Page 40 deleted from Physical Address: 0x33
+Page 41 deleted from Physical Address: 0x34
+Page 42 deleted from Physical Address: 0x35
+Page 43 deleted from Physical Address: 0x36
+Page 44 deleted from Physical Address: 0x37
+Page 45 deleted from Physical Address: 0x38
+Page 46 deleted from Physical Address: 0x39
+Page 47 deleted from Physical Address: 0x3a
+Page 48 deleted from Physical Address: 0x3b
+Page 49 deleted from Physical Address: 0x3c
+Page 50 deleted from Physical Address: 0x3d
+Page 51 deleted from Physical Address: 0x3e
+Page 52 deleted from Physical Address: 0x3f
+Page 53 deleted from Physical Address: 0x40
+Page 54 deleted from Physical Address: 0x41
+Page 55 deleted from Physical Address: 0x42
+Page 56 deleted from Physical Address: 0x43
+Page 57 deleted from Physical Address: 0x44
+Page 58 deleted from Physical Address: 0x45
+Page 59 deleted from Physical Address: 0x46
+Page 60 deleted from Physical Address: 0x47
+Page 61 deleted from Physical Address: 0x48
+Page 62 deleted from Physical Address: 0x49
+Page 63 deleted from Physical Address: 0x4a
+Page 64 deleted from Physical Address: 0x4b
+Page 65 deleted from Physical Address: 0x4c
+Page 66 deleted from Physical Address: 0x4d
+Page 67 deleted from Physical Address: 0x4e
+Page 68 deleted from Physical Address: 0x4f
+Page 69 deleted from Physical Address: 0x50
+Page 70 deleted from Physical Address: 0x51
+Page 71 deleted from Physical Address: 0x52
+Page 72 deleted from Physical Address: 0x53
+Page 73 deleted from Physical Address: 0x54
+Page 74 deleted from Physical Address: 0x55
+Page 75 deleted from Physical Address: 0x56
+Page 76 deleted from Physical Address: 0x57
+Page 77 deleted from Physical Address: 0x58
+Page 78 deleted from Physical Address: 0x59
+Page 79 deleted from Physical Address: 0x5a
+Page 80 deleted from Physical Address: 0x5b
+Page 81 deleted from Physical Address: 0x5c
+Page 82 deleted from Physical Address: 0x5d
+Page 83 deleted from Physical Address: 0x5e
+Page 84 deleted from Physical Address: 0x5f
+Page 85 deleted from Physical Address: 0x60
+Page 86 deleted from Physical Address: 0x61
+Page 87 deleted from Physical Address: 0x62
+Page 88 deleted from Physical Address: 0x63
+Page 89 deleted from Physical Address: 0x64
+Page 90 deleted from Physical Address: 0x65
+Page 91 deleted from Physical Address: 0x66
+Page 92 deleted from Physical Address: 0x67
+Page 93 deleted from Physical Address: 0x68
+Page 94 deleted from Physical Address: 0x69
+Page 95 deleted from Physical Address: 0x6a
+Page 96 deleted from Physical Address: 0x6b
+Page 97 deleted from Physical Address: 0x6c
+Page 98 deleted from Physical Address: 0x6d
+Page 99 deleted from Physical Address: 0x6e
+Page 100 deleted from Physical Address: 0x6f
+Page 101 deleted from Physical Address: 0x70
+Page 102 deleted from Physical Address: 0x71
+Page 103 deleted from Physical Address: 0x72
+Page 104 deleted from Physical Address: 0x73
+Page 105 deleted from Physical Address: 0x74
+Page 106 deleted from Physical Address: 0x75
+Page 107 deleted from Physical Address: 0x76
+Page 108 deleted from Physical Address: 0x77
+['Turnaround: 100.79657101631165']
+['Instruction: F\n']
+['Turnaround: 100.79686784744263']
+['Instruction: A 2 2 0\n']
+Process not in main or swap memory
+['Turnaround: 100.80366706848145']
+['Instruction: P 2049 2049\n']
+['Turnaround: 100.81114387512207']
+['Instruction: F\n']
+['Turnaround: 100.81136798858643']
+['Instruction: E']
