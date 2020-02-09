@@ -350,10 +350,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         #Use method to select which programs to swap out
                         IndexToSwapOut = SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, FIFO, LRU, SelectedMethod)
                         
-                        #Deleting FIFO Array and LRU Array indexes
-                        for j in range(len(IndexToSwapOut[2])):
-                            LRU.pop(IndexToSwapOut[2][j])
-
+                        #Deleting FIFO Array, not from LRU because it is still in Swap Memory
                         FIFO[0:IndexToSwapOut[0]] = []
 
 
@@ -415,7 +412,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             ToPrintOut.append("Deleted " + str(ProcessLocationL))
             
             #Delete process from main memory if in main memory
-            if any(ProcessLocationL in sl for sl in MainMemory)
+            if any(ProcessLocationL in sl for sl in MainMemory):
                 ListofProcessesAdded.remove(str(ProcessLocationL))
                 FIFO.remove(str(ProcessLocationL))
 
