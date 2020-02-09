@@ -48,7 +48,6 @@ def SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, vFIFO, vLRU, Method)
         IndexesFinalLRU = []
         IndexesFinal = []
         newSpace = 0
-        LRUindex = 0
         RealLRU = vLRU[:]
         #Method will give indexes of process to be replaced. It will add indexes to more
         #processes to be replaced until the space freed up from Main Memory fits the
@@ -91,33 +90,12 @@ def SwapOut(FreeSpace, ProgramSize, SwapMemory, MainMemory, vFIFO, vLRU, Method)
 def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
     #Lista F 
     ToPrintF = []
-    #Index to iterate through the whole instruction list
-    #Printout variable to inspect the output
-    ToPrintOut = []
-    #Page number initializer
-    PageNum = 0
-    #Number of page, recovered from instruction set
-    num = 0
     #Initializer for the index that'll be used up next
     Index = 0
-    #Boolean variable that will test the list and notify of any jumps in the memory
-    Jumped = False
-    #Iterator to go through the list
-    IteratorForMainMemory = 0
-    #List of processes currently in the memory
-    ListofProcessesAdded = []
-    #Iterator for memory, this will move through the memory range
-    IteratorForSwapMemory = 0
     #Variable to hold the program size in itself, it will be modified later
     InitialProgramSize = 0
     #Variable that will hold the process ID from the client
     ProcessID = 0
-    #I will explain this variable later on...
-    RemainingMemoryToAddress = 0
-    #Total execution time
-    Turnaround = 0.00000000000
-    #NOT USED, pending implementation
-    Freememory = []
     #Boolean variable to test if process is in main memory
     IsInMainMemory = False
     #Boolean variable to test if process is in swap memory
@@ -136,9 +114,10 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
     while Index < len(InstructionsToRun):
         #If the list wasn't empty then we can begin processing the data, we know that the client is sending a tuple and a quadruple
         print("\nInstruction to run")
-        ToPrintOut.append(["Instruction: " + InstructionsToRun[Index]])
         print(InstructionsToRun[Index])
-
+        if 'C' in InstructionsToRun[Index]:
+            #We make a comment, according to C command
+            print("Executing command C, Comment on System State: System Working Fine")
         #If we find a designator P then it indicates that we must load the program
         if 'P' in InstructionsToRun[Index]:
             #We split the data to make it easier to iterate through the tuple or quadruple
@@ -156,7 +135,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 #We proceed to try loading up the memory, specially important to switch memories
                 try:
                     ProcessLocation = ("Process ID" + " " + str(ProcessID))
-                    ListofProcessesAdded.append(str(ProcessLocation))
 
                     #Loop to cycle through the main memory list and fill it up with the program
                     #Check if process ID is in the memory
@@ -178,12 +156,9 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                         #Checks if program fits into free space of main memory
                         if ProgramSize <= len(FreeSpace):
-                            Capacity = True
-
                             #Checks if the program is in swap memory or not, to load it up
                             if IsInSwapMemory == False:
 
-                                ToPrintOut.append(["-------Process loaded------\n"])
                                 for i in range(0, ProgramSize):
                                     #Loads process info into Main Memory
                                     MainMemory[FreeSpace[i]][2] = "Page "+str(i)
@@ -191,7 +166,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                     
                                     #Printing physical address
                                     print("Page {0} in Physical Address: {1}".format(i, str(MainMemory[FreeSpace[i]][1])))
-                                    ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                                 
                                 #Adds process to FIFO and LRU lists, including its timestamp
                                 FIFO.append(ProcessLocation)
@@ -206,7 +180,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                     
                                     #Printing physical address
                                     print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
-                                    ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                                 
                                 #Adds process to FIFO and LRU lists, including its timestamp
                                 FIFO.append(ProcessLocation)
@@ -258,7 +231,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                                 MainMemory[FreeSpace[i]][3] = ProcessLocation
                                 #Printing physical address
                                 print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
-                                ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
                             
                             #Adds process to FIFO and LRU lists, including its timestamp
                             FIFO.append(ProcessLocation)
@@ -274,7 +246,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
         elif 'A' in InstructionsToRun[Index]:
 
             SplittedData = InstructionsToRun[Index].split(' ')
-
             #Check if we received all data and its validity
             try:
                 AccessVirtualMem = SplittedData[1]
@@ -311,7 +282,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         print("Modified")
 
                 #Add process to LRU list and print address
-                ToPrintOut.append("Real Address " + str(RealAddress))
                 LRU.append([ProcessLocation,time.time()])
 
             else:
@@ -343,7 +313,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                             MainMemory[FreeSpace[i]][3] = SwapMemory[IndexToSwapIn[i]][3]
                             #Printing physical address
                             print("Page {0} in Physical Address: {1} from Swap Memory Adress: {2}".format(i,str(MainMemory[FreeSpace[i]][1]),SwapMemory[IndexToSwapIn[i]][1]))
-                            ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1])+" from Swap Memory Adress" + str(SwapMemory[IndexToSwapIn[i]][1]))
                             SwapMemory[IndexToSwapIn[i]][3] = "Process ID #"
                             SwapMemory[IndexToSwapIn[i]][2] = "Page #"
                             SwapMemory[IndexToSwapIn[i]][0] = 0
@@ -384,8 +353,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         IndexToRemove = [idx for idx, val in enumerate(SwapMemory) if ProcessLocation in val]
                         print("\nlog- Removing " + ProcessLocation)   
                         for y in range(len(IndexToRemove)):
-                            print("Page {0} removed from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
-                            ToPrintOut.append("Page "+str(y)+ " removed from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
+                            print("Page {0} deleted from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
                             SwapMemory[IndexToRemove[y]][0] = 0
                             SwapMemory[IndexToRemove[y]][2] = "Page #"
                             SwapMemory[IndexToRemove[y]][3] = "Process ID #"
@@ -395,15 +363,13 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         FreeSpace = [x for x, s in enumerate(MainMemory) if "Page #" in s]
 
                         #Load into Main memory
-                        ToPrintOut.append(["-------Process loaded------\n"])
-                        print("\nLoading from SwapMemory to MainMemory")
+                        print("Loading from SwapMemory to MainMemory")
                         for i in range(0, ProgramSize):
                             MainMemory[FreeSpace[i]][0] = AccessModifierBit
                             MainMemory[FreeSpace[i]][2] = "Page "+str(i)
                             MainMemory[FreeSpace[i]][3] = ProcessLocation
                             #Printing physical address
                             print("Page {0} in Physical Address: {1}".format(i,str(MainMemory[FreeSpace[i]][1])))
-                            ToPrintOut.append("Page "+str(i)+ " in Physical Address: "+ str(MainMemory[FreeSpace[i]][1]))
 
                         #Add processes to LRU and FIFO lists  
                         FIFO.append(ProcessLocation)
@@ -422,13 +388,11 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                         print("Modified")
 
                     #Print real address and LRU has new time stamp for this process
-                    ToPrintOut.append("Real Address " + str(RealAddress))
                     LRU.append([ProcessLocation,time.time()])
 
                 #If not in main or swap memory, cant get address
                 else:
                     print("Process not in main or swap memory")
-                    ToPrintOut.append("Process not in main or swap memory")
                 
                 
 
@@ -436,11 +400,9 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             SplittedDataL = InstructionsToRun[Index].split(' ')
             ProcessIDL = ''.join(SplittedDataL[1].splitlines())
             ProcessLocationL = ("Process ID" + " " + str(ProcessIDL))
-            ToPrintOut.append("Deleted " + str(ProcessLocationL))
             
             #Delete process from main memory if in main memory
             if any(ProcessLocationL in sl for sl in MainMemory):
-                ListofProcessesAdded.remove(str(ProcessLocationL))
                 FIFO.remove(str(ProcessLocationL))
 
                 #Delete from Main Memory
@@ -449,7 +411,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
                 for y in range(len(IndexToRemove)):
                     print("Page {0} deleted from Physical Address: {1}".format(y, str(MainMemory[IndexToRemove[y]][1])))
-                    ToPrintOut.append("Page "+str(y)+ " deleted from Physical Address: "+ str(MainMemory[IndexToRemove[y]][1]))
                     MainMemory[IndexToRemove[y]][2] = "Page #"
                     MainMemory[IndexToRemove[y]][3] = "Process ID #"
                 
@@ -467,7 +428,7 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                 
 
             elif any(ProcessLocationL in sl for sl in SwapMemory):
-                print("Process is not in main memory, unable to comply with command")
+                print("Process is not in main memory")
 
                 #Delete from Swap Memory
 
@@ -475,7 +436,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
                            
                 for y in range(len(IndexToRemove)):
                     print("Page {0} deleted from SwapAddress: {1}".format(y, str(SwapMemory[IndexToRemove[y]][1])))
-                    ToPrintOut.append("Page "+str(y)+ " deleted from Swap Address: "+ str(SwapMemory[IndexToRemove[y]][1]))
                     SwapMemory[IndexToRemove[y]][2] = "Page #"
                     SwapMemory[IndexToRemove[y]][3] = "Process ID #"
                 print("Process successfully deleted from Swap Memory.")
@@ -497,11 +457,6 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
 
         elif 'E' in InstructionsToRun[Index]:
             print("Exiting...")
-            with open('Result.txt', 'w') as f:
-                for item in ToPrintOut:
-                    f.write("%s\n" % item)
-                f.close()
-            break
 
         elif 'F' in InstructionsToRun[Index]:
             TotalSwaps = 0
@@ -521,20 +476,15 @@ def CheckMemory(MainMemory, SwapMemory, PageFrameSize, Method):
             TurnAmean = TotalTime/counter
             print("Turnaround Average-----> "+ str(TurnAmean))
 
-            
-            
-
 
         end_time = time.time()
-        Turnaround_P = end_time - start_time
-        ToPrintOut.append(["Turnaround: " + str(Turnaround_P)])                        
+        Turnaround_P = end_time - start_time                      
         Index += 1
 
 def MemoryGenerator(RealMemorySize, SwapMemorySize, PageSize, Method):
     PageFrames = 0
     SelectedMethod = Method
     AuxiliaryPageFrames = 0
-    RunCheck = []
     #Generate the physical address list!
     if RealMemorySize != 0 and PageSize != 0:
         Tracker = 0
